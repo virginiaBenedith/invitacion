@@ -2,37 +2,60 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Botones de Invitación</title>
+  <title>Invitaciones Móvil</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       font-family: Arial, sans-serif;
-      padding: 20px;
+      padding: 10px;
+      background-color: #f0f0f0;
     }
-    .link-box {
-      margin-bottom: 20px;
-      border: 1px solid #ccc;
+
+    .card {
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
       padding: 15px;
-      border-radius: 10px;
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-    button {
-      margin-top: 5px;
-      padding: 8px 15px;
-      cursor: pointer;
+
+    .main-button {
+      flex: 1;
+      margin-right: 10px;
+      padding: 10px;
       background-color: #4CAF50;
       color: white;
       border: none;
-      border-radius: 5px;
+      border-radius: 8px;
+      font-size: 16px;
+      text-align: center;
     }
-    input {
-      width: 80%;
-      padding: 6px;
-      margin-top: 8px;
+
+    .copy-button {
+      background-color: #2196F3;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      color: white;
+      font-size: 18px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .copy-button:active {
+      transform: scale(0.95);
     }
   </style>
 </head>
 <body>
 
-  <h2>Invitaciones con botón y copiar link</h2>
+  <h2>Invitaciones</h2>
   <div id="container"></div>
 
   <script>
@@ -60,37 +83,28 @@
 
     links.forEach(item => {
       const div = document.createElement('div');
-      div.className = 'link-box';
+      div.className = 'card';
 
-      // Extraer nombre desde la URL
       const name = item.link.split('/').pop().replace('.html', '');
 
-      // Botón para ir al link
-      const button = document.createElement('button');
-      button.textContent = `Ver invitación de ${name}`;
-      button.onclick = () => {
+      const mainBtn = document.createElement('button');
+      mainBtn.className = 'main-button';
+      mainBtn.textContent = `Ver ${name.charAt(0).toUpperCase() + name.slice(1)}`;
+      mainBtn.onclick = () => {
         window.open(item.link, '_blank');
       };
 
-      // Campo de texto con el link
-      const input = document.createElement('input');
-      input.type = 'text';
-      input.value = item.link;
-      input.readOnly = true;
-
-      // Botón para copiar
-      const copyButton = document.createElement('button');
-      copyButton.textContent = 'Copiar link';
-      copyButton.onclick = () => {
+      const copyBtn = document.createElement('button');
+      copyBtn.className = 'copy-button';
+      copyBtn.innerHTML = '📋';
+      copyBtn.title = "Copiar link";
+      copyBtn.onclick = () => {
         navigator.clipboard.writeText(item.link)
           .then(() => alert('¡Link copiado!'));
       };
 
-      div.appendChild(button);
-      div.appendChild(document.createElement('br'));
-      div.appendChild(input);
-      div.appendChild(copyButton);
-
+      div.appendChild(mainBtn);
+      div.appendChild(copyBtn);
       container.appendChild(div);
     });
   </script>
