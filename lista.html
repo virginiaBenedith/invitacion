@@ -1,53 +1,56 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Invitaciones Móvil</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>Invitaciones</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     body {
       font-family: Arial, sans-serif;
-      padding: 10px;
-      background-color: #f0f0f0;
+      background-color: #f4f4f4;
+      padding: 5px;
     }
-
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 6px;
+    }
     .card {
       background-color: white;
-      border-radius: 12px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      padding: 15px;
-      margin-bottom: 15px;
+      padding: 5px;
+      border-radius: 10px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-
-    .main-button {
-      flex: 1;
-      margin-right: 10px;
-      padding: 10px;
-      background-color: #4CAF50;
-      color: white;
+    .name-button {
+      font-size: 12px;
+      font-weight: bold;
+      color: #2196F3;
+      background: none;
       border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      text-align: center;
+      cursor: pointer;
+      text-align: left;
+      padding: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 80%;
     }
-
+    .name-button:hover {
+      text-decoration: underline;
+    }
     .copy-button {
       background-color: #2196F3;
       border: none;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
+      border-radius: 6px;
+      width: 30px;
+      height: 30px;
       color: white;
-      font-size: 18px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      font-size: 16px;
       cursor: pointer;
     }
-
     .copy-button:active {
       transform: scale(0.95);
     }
@@ -56,7 +59,7 @@
 <body>
 
   <h2>Invitaciones</h2>
-  <div id="container"></div>
+  <div class="grid" id="container"></div>
 
   <script>
     const links = [
@@ -77,20 +80,23 @@
       { index: 14, link: "https://virginiabenedith.github.io/invitacion/li1/sofia.html" },
       { index: 15, link: "https://virginiabenedith.github.io/invitacion/li1/vanessa.html" },
       { index: 16, link: "https://virginiabenedith.github.io/invitacion/li1/yader.html" },
+      { index: 17, link: "https://virginiabenedith.github.io/invitacion/index.html" },
     ];
 
     const container = document.getElementById('container');
 
-    links.forEach(item => {
+    links.forEach((item, i) => {
       const div = document.createElement('div');
       div.className = 'card';
 
-      const name = item.link.split('/').pop().replace('.html', '');
+      let nameRaw = (i === 17) ? "general" : item.link.split('/').pop().replace('.html', '');
+      let name = nameRaw.charAt(0).toUpperCase() + nameRaw.slice(1);
 
-      const mainBtn = document.createElement('button');
-      mainBtn.className = 'main-button';
-      mainBtn.textContent = `Ver ${name.charAt(0).toUpperCase() + name.slice(1)}`;
-      mainBtn.onclick = () => {
+      const nameBtn = document.createElement('button');
+      nameBtn.className = 'name-button';
+      nameBtn.textContent = `${i + 1} ${name}`;
+      nameBtn.title = `Abrir link de ${name}`;
+      nameBtn.onclick = () => {
         window.open(item.link, '_blank');
       };
 
@@ -100,10 +106,10 @@
       copyBtn.title = "Copiar link";
       copyBtn.onclick = () => {
         navigator.clipboard.writeText(item.link)
-          .then(() => alert('¡Link copiado!'));
+          .then(() => alert(`Link de ${name} copiado`));
       };
 
-      div.appendChild(mainBtn);
+      div.appendChild(nameBtn);
       div.appendChild(copyBtn);
       container.appendChild(div);
     });
