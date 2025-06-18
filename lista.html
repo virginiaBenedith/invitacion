@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Botones de Invitación</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .link-box {
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      padding: 15px;
+      border-radius: 10px;
+    }
+    button {
+      margin-top: 5px;
+      padding: 8px 15px;
+      cursor: pointer;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+    input {
+      width: 80%;
+      padding: 6px;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Invitaciones con botón y copiar link</h2>
+  <div id="container"></div>
+
+  <script>
+    const links = [
+      { index: 0, link: "https://virginiabenedith.github.io/invitacion/li0/abraham.html" },
+      { index: 1, link: "https://virginiabenedith.github.io/invitacion/li0/claudia.html" },
+      { index: 2, link: "https://virginiabenedith.github.io/invitacion/li0/elieth.html" },
+      { index: 3, link: "https://virginiabenedith.github.io/invitacion/li0/emmanuel.html" },
+      { index: 4, link: "https://virginiabenedith.github.io/invitacion/li0/laura.html" },
+      { index: 5, link: "https://virginiabenedith.github.io/invitacion/li0/mama.html" },
+      { index: 6, link: "https://virginiabenedith.github.io/invitacion/li0/rebeca.html" },
+      { index: 7, link: "https://virginiabenedith.github.io/invitacion/li0/ronier.html" },
+      { index: 8, link: "https://virginiabenedith.github.io/invitacion/li0/steyling.html" },
+      { index: 9, link: "https://virginiabenedith.github.io/invitacion/li0/tamy.html" },
+      { index: 10, link: "https://virginiabenedith.github.io/invitacion/li1/elvin.html" },
+      { index: 11, link: "https://virginiabenedith.github.io/invitacion/li1/jaqueline.html" },
+      { index: 12, link: "https://virginiabenedith.github.io/invitacion/li1/kelly.html" },
+      { index: 13, link: "https://virginiabenedith.github.io/invitacion/li1/reyna.html" },
+      { index: 14, link: "https://virginiabenedith.github.io/invitacion/li1/sofia.html" },
+      { index: 15, link: "https://virginiabenedith.github.io/invitacion/li1/vanessa.html" },
+      { index: 16, link: "https://virginiabenedith.github.io/invitacion/li1/yader.html" },
+    ];
+
+    const container = document.getElementById('container');
+
+    links.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'link-box';
+
+      // Extraer nombre desde la URL
+      const name = item.link.split('/').pop().replace('.html', '');
+
+      // Botón para ir al link
+      const button = document.createElement('button');
+      button.textContent = `Ver invitación de ${name}`;
+      button.onclick = () => {
+        window.open(item.link, '_blank');
+      };
+
+      // Campo de texto con el link
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.value = item.link;
+      input.readOnly = true;
+
+      // Botón para copiar
+      const copyButton = document.createElement('button');
+      copyButton.textContent = 'Copiar link';
+      copyButton.onclick = () => {
+        navigator.clipboard.writeText(item.link)
+          .then(() => alert('¡Link copiado!'));
+      };
+
+      div.appendChild(button);
+      div.appendChild(document.createElement('br'));
+      div.appendChild(input);
+      div.appendChild(copyButton);
+
+      container.appendChild(div);
+    });
+  </script>
+
+</body>
+</html>
