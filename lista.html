@@ -8,16 +8,16 @@
     body {
       font-family: Arial, sans-serif;
       background-color: #f4f4f4;
-      padding: 5px;
+      padding: 10px;
     }
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 6px;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
     }
     .card {
       background-color: white;
-      padding: 5px;
+      padding: 10px;
       border-radius: 10px;
       box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
       display: flex;
@@ -25,7 +25,7 @@
       align-items: center;
     }
     .name-button {
-      font-size: 12px;
+      font-size: 16px;
       font-weight: bold;
       color: #2196F3;
       background: none;
@@ -63,25 +63,34 @@
 
   <script>
     const links = [
-      { index: 0, link: "https://virginiabenedith.github.io/invitacion/li0/abraham.html" },
-      { index: 1, link: "https://virginiabenedith.github.io/invitacion/li0/claudia.html" },
-      { index: 2, link: "https://virginiabenedith.github.io/invitacion/li0/elieth.html" },
-      { index: 3, link: "https://virginiabenedith.github.io/invitacion/li0/enmanuel.html" },
-      { index: 4, link: "https://virginiabenedith.github.io/invitacion/li0/laura.html" },
-      { index: 5, link: "https://virginiabenedith.github.io/invitacion/li0/mama.html" },
-      { index: 6, link: "https://virginiabenedith.github.io/invitacion/li0/rebeca.html" },
-      { index: 7, link: "https://virginiabenedith.github.io/invitacion/li0/ronier.html" },
-      { index: 8, link: "https://virginiabenedith.github.io/invitacion/li0/steyling.html" },
-      { index: 9, link: "https://virginiabenedith.github.io/invitacion/li0/tamy.html" },
-      { index: 10, link: "https://virginiabenedith.github.io/invitacion/li1/elvin.html" },
-      { index: 11, link: "https://virginiabenedith.github.io/invitacion/li1/jaqueline.html" },
-      { index: 12, link: "https://virginiabenedith.github.io/invitacion/li1/kelly.html" },
-      { index: 13, link: "https://virginiabenedith.github.io/invitacion/li1/reyna.html" },
-      { index: 14, link: "https://virginiabenedith.github.io/invitacion/li1/sofia.html" },
-      { index: 15, link: "https://virginiabenedith.github.io/invitacion/li1/vanesa.html" },
-      { index: 16, link: "https://virginiabenedith.github.io/invitacion/li1/yader.html" },
-      { index: 17, link: "https://virginiabenedith.github.io/invitacion/index.html" },
+      { link: "https://virginiabenedith.github.io/invitacion/li0/abraham.html" },
+      { link: "https://virginiabenedith.github.io/invitacion/li0/claudia.html" },
+      { link: "https://virginiabenedith.github.io/invitacion/li0/elieth.html" },
+      { link: "https://virginiabenedith.github.io/invitacion/li0/eliezer.html" },
+      { link: "https://virginiabenedith.github.io/invitacion/li1/elvin.html" },
+      { link: "https://virginiabenedith.github.io/invitacion/li0/enmanuel.html" },
+      { link: "https://virginiabenedith.github.io/invitacion/index.html" }, // General
+      { link: "https://virginiabenedith.github.io/invitacion/li1/jaqueline.html" },
+      { link: "https://virginiabenedith.github.io/invitacion/li1/kelly.html" },
+      { link: "https://virginiabenedith.github.io/invitacion/li0/laura.html" },
+      { link: "https://virginiabenedith.github.io/invitacion/li0/mama.html" },
+      { link: "https://virginiabenedith.github.io/invitacion/li0/rebeca.html" },
+      { link: "https://virginiabenedith.github.io/invitacion/li1/reyna.html" },
+      { link: "https://virginiabenedith.github.io/invitacion/li0/ronier.html" },
+      { link: "https://virginiabenedith.github.io/invitacion/li1/samuel.html" },
+      { link: "https://virginiabenedith.github.io/invitacion/li1/sofia.html" },
+      { link: "https://virginiabenedith.github.io/invitacion/li0/steyling.html" },
+      { link: "https://virginiabenedith.github.io/invitacion/li0/tamy.html" },
+      { link: "https://virginiabenedith.github.io/invitacion/li1/vanesa.html" },
+      { link: "https://virginiabenedith.github.io/invitacion/li1/yader.html" }
     ];
+
+    // Ordenar alfabéticamente por nombre extraído del link
+    links.sort((a, b) => {
+      const nameA = a.link.split('/').pop().replace('.html', '');
+      const nameB = b.link.split('/').pop().replace('.html', '');
+      return nameA.localeCompare(nameB);
+    });
 
     const container = document.getElementById('container');
 
@@ -89,21 +98,17 @@
       const div = document.createElement('div');
       div.className = 'card';
 
-      let nameRaw = (i === 17) ? "general" : item.link.split('/').pop().replace('.html', '');
-      let name = nameRaw.charAt(0).toUpperCase() + nameRaw.slice(1);
+      let rawName = item.link.split('/').pop().replace('.html', '');
+      let name = rawName === 'index' ? 'General' : rawName.charAt(0).toUpperCase() + rawName.slice(1);
 
       const nameBtn = document.createElement('button');
       nameBtn.className = 'name-button';
-      nameBtn.textContent = `${i + 1} ${name}`;
-      nameBtn.title = `Abrir link de ${name}`;
-      nameBtn.onclick = () => {
-        window.open(item.link, '_blank');
-      };
+      nameBtn.textContent = `${i + 1}. ${name}`;
+      nameBtn.onclick = () => window.open(item.link, '_blank');
 
       const copyBtn = document.createElement('button');
       copyBtn.className = 'copy-button';
       copyBtn.innerHTML = '📋';
-      copyBtn.title = "Copiar link";
       copyBtn.onclick = () => {
         navigator.clipboard.writeText(item.link)
           .then(() => alert(`Link de ${name} copiado`));
